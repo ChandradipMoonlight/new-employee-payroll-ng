@@ -44,6 +44,18 @@ export class AddComponent implements OnInit {
     }
   ]
 
+  /**
+   * The Constructor is a default method of the class that is executed when the class is instantiated.
+   * Constructor ensures proper initialization of fields (class members) in the class and its subclasses.
+   * Angular Dependency Injector (DI) analyzes the constructor parameters.
+   * Added Valiation to the Employee Payroll Form Data.
+   * @param formBuilder 
+   * @param httpService 
+   * @param router 
+   * @param activatedRoute 
+   * @param dataService 
+   */
+
   constructor(
     private formBuilder: FormBuilder,
     private httpService: HttpService,
@@ -62,6 +74,12 @@ export class AddComponent implements OnInit {
     })
    }
 
+   /**
+    * ngOnInit is a life cycle hook called by Angular to indicate that the Angular is done creating the component.
+    * 
+    * I use get and set attributes to fetch all the employee data while updatating the employee data.
+    * hence this method is called when Update method is triggered.
+    */
   ngOnInit(): void {
     if(this.activatedRoute.snapshot.params['id'] !=undefined) {
       this.dataService.currentEmployee.subscribe(employee=>{
@@ -87,12 +105,23 @@ export class AddComponent implements OnInit {
     console.log(this.employeeFormGroup);
   }
 
+  /**
+   * This method is used to capture the salary value form the slider.
+   * 
+   * @param value the value is seted in the interval of the 1000.
+   * @returns value stored in the salary.
+   */
   formatLabel(value: number) {
     if (value >= 1000) {
       return Math.round(value / 1000) + 'k';
     }
     return value;
   }
+  salary: number = 400000;
+  updateSetting(event: any) {
+    this.salary = event.value;
+  }
+
 
   onCheckboxChange(event: MatCheckboxChange) {
     const department: FormArray = this.employeeFormGroup.get('department') as FormArray;
@@ -105,11 +134,12 @@ export class AddComponent implements OnInit {
     }
   }
 
-  salary: number = 400000;
-  updateSetting(event: any) {
-    this.salary = event.value;
-  }
-
+  /**
+   * this method is used to add the data which user has entered in the form when hit enter on the submit button.
+   * it add the response to the home page. 
+   * it has added the path of home page when user hit enter to the submit button it will navigate the home page 
+   * with the help of router and add the response to the home page.
+   */
   onSubmit(): void {
     if (this.activatedRoute.snapshot.params['id'] != undefined) {
       console.log(this.employeeFormGroup.value);
@@ -130,9 +160,9 @@ export class AddComponent implements OnInit {
 
    /**
    * This method validate the employee name and note
-   * @param controlName 
+   * @param controlName
    * @param errorName 
-   * @returns 
+   * @returns the error message when has error.
    */
     public checkError = (controlName: string, errorName: string) => {
       return this.employeeFormGroup.controls[controlName].hasError(errorName);
