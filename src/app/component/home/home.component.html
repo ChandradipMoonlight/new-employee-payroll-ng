@@ -1,0 +1,46 @@
+<app-header></app-header>
+
+<div class="main-content">
+    <div class="header-content">
+        <div class="emp-detail-text">
+            Employee Details
+            <div class="emp-count">{{employeeCount}}</div>
+        </div>
+        <a class="add-button" routerLink="/add">
+            <img src="../../../assets/icons/add-24px.svg" alt="Add User Logo">Add User
+        </a>
+    </div>
+
+    <div class="table-main">
+
+        <table id="table-display" class="table">
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Department</th>
+                <th>Salary</th>
+                <th>Start Date</th>
+                <th>Actions</th>
+            </tr>
+
+            <tr *ngFor="let emp of employeeDetails">
+                <td><img class="profile" src={{emp.imagePath}} alt=""></td>
+                <td>{{ emp.name }}</td>
+                <td>{{ emp.gender }}</td>
+                <td>
+                    <div class="dept-label" *ngFor="let department of emp.department">
+                        {{department}}
+                    </div>
+                </td>
+                <td>{{ emp.salary | currency:'₹ ' }}</td>
+                <td>{{ emp.startDate | date:"dd MMM yyy" }}</td>
+                <td>
+                    <img id={{emp.id}} (click)="remove(emp.id)" src="../assets/icons/delete-black-18dp.svg" alt="delete">
+                    <img id={{emp.id}} (click)="update(emp)" src="../assets/icons/create-black-18dp.svg" alt="edit">
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

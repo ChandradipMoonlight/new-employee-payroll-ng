@@ -1,0 +1,104 @@
+<app-header></app-header>
+<div class="form-content">
+    <form class="form" [formGroup]="employeeFormGroup" (ngSubmit)="onSubmit()">
+
+        <div class="form-head">Employee Payroll form </div>
+
+        <!-------Input Name--------->
+        <div class="row-content">
+            <mat-label class="label text">Full Name</mat-label>
+            <mat-form-field class="example-full-width" appearance="outline">
+                <input class="name-input" matInput placeholder="Your name" formControlName="name">
+                <mat-error *ngIf="checkError('name', 'required')">Name is required</mat-error>
+                <mat-error *ngIf="checkError('name', 'pattern')">Name should start with capital latter and have minimum of 3 characters
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <!------Profile image---------->
+        <div class="row-content">
+            <label class="label text" for="profile">Profile Image </label>
+            <div class="profile-radio-content">
+                <mat-radio-group ngDefaultControl formControlName="imagePath">
+                    <mat-radio-button name="profile" color="primary" value="../assets/profile-images/Ellipse -1.png">
+                        <img class="profile" id='image1' src="../assets/profile-images/Ellipse -1.png">
+                    </mat-radio-button>
+                    <mat-radio-button name="profile" color="primary" value="../assets/profile-images/Ellipse -2.png">
+                        <img class="profile" id='image2' src="../assets/profile-images/Ellipse -2.png">
+                    </mat-radio-button>
+                    <mat-radio-button name="profile" color="primary" value="../assets/profile-images/Ellipse -3.png">
+                        <img class="profile" id='image3' src="../assets/profile-images/Ellipse -3.png">
+                    </mat-radio-button>
+                    <mat-radio-button name="profile" color="primary" value="../assets/profile-images/Ellipse -4.png">
+                        <img class="profile" id='image4' src="../assets/profile-images/Ellipse -4.png">
+                    </mat-radio-button>
+                    <mat-radio-button name="profile" color="primary" value="../assets/profile-images/Ellipse -5.png">
+                        <img class="profile" id='image5' src="../assets/profile-images/Ellipse -5.png">
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+
+
+        <!-----Input Gender--------->
+        <div class="row-content">
+            <label class="label text" for="gender">Gender</label>
+            <div>
+                <mat-radio-group ngDefaultControl formControlName="gender">
+                    <mat-radio-button type="radio" name="gender" color="primary" value="male">
+                        <label class="text" for="male">Male</label>
+                    </mat-radio-button>
+                    <mat-radio-button type="radio" name="gender" color="primary" value="female">
+                        <label class="text" for="female">Female</label>
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+
+        <!------Input Department------->
+        <div class="row-content">
+            <label class="label text" for="department">Department</label>
+            <div *ngFor="let department of departments">
+                <mat-checkbox class="checkbox" type="checkbox" color="primary" [value]="department.value" (change)="onCheckboxChange($event)" [checked]="department.checked">
+                    <label class="text">{{department.name}}</label>
+                </mat-checkbox>
+            </div>
+        </div>
+
+
+        <!-----Input Salary------>
+        <div class="row-content">
+            <label class="label text" for="salary">Choose your Salary </label>
+            <mat-slider thumbLabel [displayWith]="formatLabel" #salaryOutput (change)="updateSetting($event)" color="primary" tickInterval="1000" aria-label="units" class="salary-input" name="salary" min="300000" max="500000" step="1000" [value]="salary" formControlName="salary"></mat-slider>
+        </div>
+
+        <!-------Input Date------>
+        <div class="row-content">
+            <label class="label text" for="startDate"> Start Date </label>
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="startDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <!------Input Notes------->
+        <div class="row-content">
+            <mat-label class="label text">Notes</mat-label>
+            <mat-form-field class="example-full-width" appearance="outline">
+                <textarea matInput id="notes" name="Notes" placeholder="" style="height:100px" formControlName="notes"></textarea>
+                <mat-error *ngIf="checkError('name', 'required')">Note is required</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="buttonParent">
+            <a routerLink="/home">
+                <button mat-raised-button class="resetButton button cancelButton">Cancel</button>
+            </a>
+            <div class="submit-reset">
+                <button mat-raised-button type="submit" class="button submitButton">Submit</button>
+                <button mat-raised-button type="reset" class="resetButton button">Reset</button>
+            </div>
+        </div>
+    </form>
+</div>
